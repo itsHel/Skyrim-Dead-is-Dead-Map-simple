@@ -56,7 +56,7 @@ function customSelect(elements, optionsPicked = {}){
 
         selectOriginal.querySelectorAll("option").forEach(function(option){
             let selectClass = "";
-            if(option.getAttribute("selected") == "selected" || option.getAttribute("selected")){
+            if(option.getAttribute("selected") == "selected" || option.getAttribute("selected") || option.selected){
                 headerSelect = "<div class=\"custom-select-header\"><span>" + option.textContent + "</span><span class=\"chevron\"></span></div>";
                 selectClass = "custom-selected";
             }
