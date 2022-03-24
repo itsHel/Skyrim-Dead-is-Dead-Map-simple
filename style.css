@@ -59,6 +59,7 @@ nav{
 #map{
     display: block;
     margin:0 auto;
+    transition: transform 0.2s;
 }
 #map-wrapper{
     width: min-content;
@@ -66,6 +67,7 @@ nav{
     position: relative;
     transition: all 0.5s;
     opacity:0;
+    overflow: hidden;
     transform:scale(0.8);
 }
 @font-face{
