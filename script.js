@@ -6,14 +6,19 @@
 
     const map = $("#map");
     const mapWrapper = $("#map-wrapper");
-    const baseImg = "5_2016.png";
+    const baseImg = $("#type-select option").value;
+    const imgDir = "img/";
     const counterSize = 32;
+    const scalling = {
+        "first.png": 1,
+        "edited.png": 1.08
+    }
 
     var mapScale = parseFloat(localStorage["scale"] || 1);
     // Object of arrays of times when was death counted, arrays are named as coords: "x142y444"
     var deaths = JSON.parse(localStorage["data"] || "{}");
     var mapType = localStorage["mapType"] || baseImg;
-    map.src = "img/" + mapType;
+    map.src = imgDir + mapType;
 
     window.addEventListener("load", function(){
         init();
@@ -31,18 +36,22 @@
 
     function init(){
         document.documentElement.style.setProperty("--counter-size", counterSize + "px");
+        
+        map.style.transform = "scale(" + scalling[mapType] + ")";
 
         $("nav").style.width = "calc(100vw - " + (window.innerWidth - document.documentElement.clientWidth) + "px)";
 
         // Select
         let typeSelect = $("#type-select");
+        typeSelect.value = mapType;
 
         if(mapType != baseImg){
             typeSelect.value = mapType;
         }
 
         typeSelect.addEventListener("change", function(){
-            map.src = "img/" + this.value;
+            map.src = imgDir + this.value;
+            map.style.transform = "scale(" + scalling[this.value] + ")";
 
             window.localStorage["mapType"] = this.value;
         });
@@ -76,6 +85,8 @@
                     setZoom();
                 });
             }
+        } else {
+            $("#scale-val").textContent = 100;
         }
 
         $(".plus").addEventListener("click", function(){
