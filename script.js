@@ -7,11 +7,11 @@
     const map = $("#map");
     const mapWrapper = $("#map-wrapper");
     const baseImg = $("#type-select option").value;
-    const imgDir = "img/";
+    const imgDir = "";
     const counterSize = 32;
     const scalling = {
-        "first.png": 1,
-        "edited.png": 1.08
+        "REPLACE": 1,
+        "REPLACE": 1.08
     }
 
     var mapScale = parseFloat(localStorage["scale"] || 1);
