@@ -30,7 +30,7 @@
   ;
   --background-color-active:
     var(--select-light, #e3edf1)
-    var(--select-dark, -webkit-linear-gradient(bottom, #323538 0%, #3A3D40 100%))
+    var(--select-dark, -webkit-linear-gradient(bottom, #323538 0%, #45494d 100%))
     var(--select-pride, green)
   ;
   --border-color:
@@ -45,7 +45,7 @@
 ;
   --dropdown-hover-background-color:
     var(--select-light, #e3edf1)
-    var(--select-dark, -webkit-linear-gradient(bottom, #323538 0%, #3A3D40 100%))
+    var(--select-dark, -webkit-linear-gradient(bottom, #323538 0%, #45494d 100%))
     var(--select-pride, green)
   ;
   --dropdown-hover-text-color:
@@ -58,6 +58,11 @@
     var(--select-dark, #fff)
     var(--select-pride, green)
   ;
+  --header-background-transition:
+    var(--select-light, 0.3s)
+    var(--select-dark, 0s)
+    var(--select-pride, 0.3s)
+  ;
 }
 
 
@@ -66,7 +71,6 @@
   min-width: 85px;
   position: relative;
   display: inline-block;
-  // box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.15);
   &.select-open{
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -76,6 +80,7 @@
       border: 1px solid var(--border-color-active);
       color: var(--header-text-color-active);
       background: var(--background-color-active);
+      transition: background 0.3s, border-radius 0s;
     }
     .select-items-wrapper{
       transition: opacity 0.5s, max-height 0.4s, border-color 0.3s;
@@ -92,7 +97,7 @@
 }
 
 .custom-select-header{
-  color:var(--header-text-color);
+  color: var(--header-text-color);
   border: 1px solid var(--border-color);
   background: var(--background-color);
   border-radius: 0.3rem;
@@ -104,11 +109,11 @@
   overflow: hidden;
   white-space: nowrap;
   height: 100%;
-  transition: 0.3s;
+  transition: background var(--header-background-transition), border-radius 0.6s ease-in;
   box-sizing: border-box;
   cursor: pointer;
   span{
-    display:inline-block;
+    display: inline-block;
     max-width: calc(100% - 24px);     /* - chevron width */
     overflow: hidden;
   }
