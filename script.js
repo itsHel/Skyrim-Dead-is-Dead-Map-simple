@@ -10,8 +10,8 @@
     const imgDir = "";
     const counterSize = 32;
     const scalling = {
-        "REPLACE": 1,
-        "REPLACE": 1.08
+        "https://www.gamebanshee.com/skyrim/mapofskyrim/skyrimmap.png": 1,
+        "https://images.uesp.net/e/ef/SR-map-Skyrim.jpg": "1.04, 1.14"
     }
 
     var mapScale = parseFloat(localStorage["scale"] || 1);
@@ -240,7 +240,7 @@
     }
 
     function getCounterHtml(count, x, y, basex = x, basey = y, scale = mapScale){
-        let html = `<div id="counter-x${basex}y${basey}s${scale}" class="counter" style="left: ${x}px; top: ${y}px; transform:scale(${mapScale})" data-basex="${basex}" data-basey="${basey}" data-scale=${scale} tabindex=${count}>
+        let html = `<div id="counter-x${Math.round(basex)}y${Math.round(basey)}s${scale}" class="counter" style="left: ${x}px; top: ${y}px; transform:scale(${mapScale})" data-basex="${basex}" data-basey="${basey}" data-scale=${scale} tabindex=${count}>
                         <span class="arrow arrow-top"><svg viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"/></svg></span>
                         <span class=count>${count}</span>
                         <span class="arrow arrow-bottom"><svg viewBox="0 0 24 24"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg></span>
@@ -279,7 +279,7 @@
     }
 
     function save(x, y, scale, remove = false){
-        let divName = "x" + parseInt(x) + "y" + parseInt(y) + "s" + scale;
+        let divName = "x" + Math.round(x) + "y" + Math.round(y) + "s" + scale;
         let newAdded = false;
 
         if(remove){
