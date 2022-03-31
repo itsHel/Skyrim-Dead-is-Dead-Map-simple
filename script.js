@@ -78,7 +78,7 @@
         $("#count-val").textContent = i;
         if(i){
             $("#sidemenu-list").insertAdjacentHTML("beforeend", listHtml);
-            $("#sidemenu-wrapper").style.display = "flex";
+            // $("#sidemenu-wrapper").style.display = "flex";
         }
 
         if(mapScale != 1){
@@ -143,6 +143,7 @@
             if(e.target.nodeName != "IMG")
                 return;
 
+                // layerX works in Chrome and Opera despite MDN saying it doesnt
                 let x = e.layerX || e.offsetX;
                 let y = e.layerY || e.offsetY;
 
