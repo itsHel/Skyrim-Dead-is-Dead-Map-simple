@@ -7,11 +7,12 @@
     const map = $("#map");
     const mapWrapper = $("#map-wrapper");
     const baseImg = $("#type-select option").value;
+    const loading = $("#loading");
     const imgDir = "";
     const counterSize = 32;
     const scalling = {
-        "https://www.gamebanshee.com/skyrim/mapofskyrim/skyrimmap.png": 1,
-        "https://images.uesp.net/e/ef/SR-map-Skyrim.jpg": "1.04, 1.14"
+        "https://www.gamebanshee.com/skyrim/mapofskyrim/skyrimmap.png": "none",
+        "https://images.uesp.net/e/ef/SR-map-Skyrim.jpg": "translate(-0.85%, 0.65%) scale(1.05, 1.135)"
     }
 
     var mapScale = parseFloat(localStorage["scale"] || 1);
@@ -27,17 +28,19 @@
     if(map.complete){
         mapWrapper.style.opacity = 1;
         mapWrapper.style.transform = "none";
+        loading.style.display = "none";
     } else {
         map.addEventListener("load", function(){
             mapWrapper.style.opacity = 1;
-            mapWrapper.style.transform = "none";         
+            mapWrapper.style.transform = "none";
+            loading.style.display = "none";
         });                
     }
 
     function init(){
         document.documentElement.style.setProperty("--counter-size", counterSize + "px");
         
-        map.style.transform = "scale(" + scalling[mapType] + ")";
+        map.style.transform = scalling[mapType];
 
         $("nav").style.width = "calc(100vw - " + (window.innerWidth - document.documentElement.clientWidth) + "px)";
 
@@ -51,8 +54,9 @@
 
         typeSelect.addEventListener("change", function(){
             map.src = imgDir + this.value;
-            map.style.transform = "scale(" + scalling[this.value] + ")";
+            map.style.transform = scalling[this.value];
 
+            loading.style.display = "block";
             window.localStorage["mapType"] = this.value;
         });
 
@@ -139,8 +143,8 @@
             if(e.target.nodeName != "IMG")
                 return;
 
-                let y = e.offsetY;
-                let x = e.offsetX;
+                let x = e.layerX || e.offsetX;
+                let y = e.layerY || e.offsetY;
 
                 createCounter(x, y, mapScale);
         });
