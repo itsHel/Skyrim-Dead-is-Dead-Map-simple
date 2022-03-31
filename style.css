@@ -288,7 +288,7 @@ nav{
 }
 .tooltip{
     pointer-events: none;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: normal;
     white-space: nowrap;
     position: absolute;
@@ -313,4 +313,47 @@ nav{
 }
 #type-select{
     display: none;
+}
+
+#loading{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 156px;
+    height: 156px;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+}  
+.circle{
+    position: absolute;
+    border: 3px solid transparent;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: rotate linear infinite;
+}
+.circle.one{
+    height: 50px;
+    width: 50px;
+    left: 50px;
+    top: 50px;
+    animation-duration: 0.85s;
+}
+.circle.two{
+    height: 75px;
+    width: 75px;
+    top: 38px;
+    left: 38px;
+    animation-duration: 0.95s;
+}
+.circle.three{
+    height: 100px;
+    width: 100px;
+    top: 25px;
+    left: 25px;
+    animation-duration: 1.05s;
+}
+@keyframes rotate{
+  from {transform: rotateZ(360deg)}
+  to {transform: rotateZ(0deg)}
 }
