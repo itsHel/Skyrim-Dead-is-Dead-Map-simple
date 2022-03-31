@@ -78,7 +78,7 @@
         $("#count-val").textContent = i;
         if(i){
             $("#sidemenu-list").insertAdjacentHTML("beforeend", listHtml);
-            // $("#sidemenu-wrapper").style.display = "flex";
+            $("#sidemenu-wrapper").style.display = "flex";
         }
 
         if(mapScale != 1){
