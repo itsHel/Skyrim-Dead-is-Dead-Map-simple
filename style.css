@@ -2,6 +2,10 @@
     --sidemenu-width: 100px;
     --sidemenu-max-height: 600px;
 }
+@font-face{
+    font-family: "Requiem";
+    src: url("font/Kingthings_Petrock_light.ttf");
+}
 html, body{
     margin:0;
     min-width:100vw;
@@ -15,6 +19,20 @@ body{
     justify-content: center;
     align-items: center;
 }
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: #ccb383;
+    background: #fff;
+    background-color: rgb(222,222,222);
+}
+::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 8px;
+    background: #444;
+    border-radius: 6px;
+}
+
 nav{
     position:fixed;
     left:0;
@@ -60,6 +78,8 @@ nav{
     display: block;
     margin:0 auto;
     transition: transform 0.2s;
+    /* cursor: url(img/bones.png) 13 13, pointer; */
+    cursor: url(img/skull.png) 13 13, pointer;
 }
 #map-wrapper{
     width: min-content;
@@ -70,16 +90,12 @@ nav{
     overflow: hidden;
     transform:scale(0.8);
 }
-@font-face{
-    font-family: "Requiem";
-    src: url("font/Kingthings_Petrock_light.ttf");
-}
 .minus, .plus{
     all:unset;
     cursor: pointer;
     padding: 5px;
     font-size: 20px;
-    transition: all 0.15;
+    transition: all 0.15s;
 }
 .minus:active, .plus:active{
     transform: translateY(1px);
@@ -121,7 +137,7 @@ nav{
 }
 /* Filled background red version*/
 .counter{
-    background: #c9000070;
+    background: #c9000080;
     color:white;
     border: 2px solid #c90000;
 }
@@ -158,14 +174,14 @@ nav{
 .counter .arrow-bottom{
     top:calc(70% + 1px);
 }
-.counter:hover .arrow{
+.counter:hover .arrow, .counter:focus .arrow{
     height: 24px;
     opacity: 1;
 }
-.counter:hover .arrow-top{
+.counter:hover .arrow-top, .counter:focus .arrow-top{
     bottom:100%;
 }
-.counter:hover .arrow-bottom{
+.counter:hover .arrow-bottom, .counter:focus .arrow-bottom{
     top:calc(100% + 1px);
 }
 .counter .arrow:hover svg{
@@ -194,10 +210,8 @@ nav{
     right:calc(var(--sidemenu-width) * -1);
     box-shadow: none;
 }
-
 #sidemenu-toggle{
     position: absolute;
-    /* background: #AA1111; */ /* red */
     background: white;
     top:35px;
     right:100%;
@@ -216,7 +230,6 @@ nav{
     margin-left: 1px;
     width:22px;
     min-width: 22px;
-    /* fill:white; */
     fill:black;
     transition: transform 0.5s;
 }
@@ -292,10 +305,11 @@ nav{
     font-weight: normal;
     white-space: nowrap;
     position: absolute;
-    right:0;
-    top:2rem;
+    transform-origin: center right;
+    right:50%;
+    top:3rem;
     opacity:0;
-    transform: scale(0.7);
+    transform: scale(0.75) translate(50%, -10px);
     transition: transform 325ms, opacity 325ms;
     transition-timing-function: cubic-bezier(.54,1.5,.38,1.11);
     text-align: center;
@@ -308,7 +322,7 @@ nav{
 }
 #info:hover .tooltip{
     opacity:1;
-    transform: scale(1) translateY(-10px);
+    transform: scale(1) translate(50%, -10px);
     pointer-events: all;
 }
 #type-select{
@@ -324,6 +338,7 @@ nav{
     transform: translate(-50%, -50%);
     background: rgba(0,0,0,0.6);
     border-radius: 50%;
+    z-index:999;
 }  
 .circle{
     position: absolute;
@@ -356,4 +371,33 @@ nav{
 @keyframes rotate{
   from {transform: rotateZ(360deg)}
   to {transform: rotateZ(0deg)}
+}
+
+@media screen and (max-width: 480px){
+    nav{
+        justify-content: center;
+        padding:0.5rem;
+    }
+    .logo{
+        display: none;
+    }
+    .tooltip{
+        right: 0;
+        white-space: normal;
+        width: 160px;
+        right: -80px;
+    }
+    #scale{
+        width: 30px;
+    }
+    #count{
+        min-width: 70px;
+    }
+    .minus, .plus{
+        font-size: 30px;
+    }
+    .right{
+        margin-left: -0.5rem;
+        gap: 0.2rem;
+    }
 }

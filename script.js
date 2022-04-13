@@ -1,5 +1,3 @@
-// Colors - AA1111 FFFFFF EBEBEB 000000
-
 (function(){
     const $ = document.querySelector.bind(document);
     const $$ = document.querySelectorAll.bind(document);
@@ -34,7 +32,7 @@
             mapWrapper.style.opacity = 1;
             mapWrapper.style.transform = "none";
             loading.style.display = "none";
-        });                
+        });
     }
 
     function init(){
@@ -206,8 +204,8 @@
 
     // On map click
     function createCounter(x, y, scale){
-        let saveX = x - ((counterSize / 2) * scale);
-        let saveY = y - ((counterSize / 2) * scale);
+        let saveX = x - ((counterSize / 2) * scale) - scale;
+        let saveY = y - ((counterSize / 2) * scale) - scale;
         
         let html = getCounterHtml(1, saveX, saveY);
 
