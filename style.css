@@ -79,7 +79,7 @@ nav{
     margin:0 auto;
     transition: transform 0.2s;
     /* cursor: url(img/bones.png) 13 13, pointer; */
-    cursor: url(img/skull.png) 13 13, pointer;
+    cursor: url(img/skull-cursor.png) 12 12, pointer;
 }
 #map-wrapper{
     width: min-content;
