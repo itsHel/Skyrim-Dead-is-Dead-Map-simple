@@ -59,6 +59,7 @@
         });
 
         customSelect(typeSelect, {theme: "dark"});
+        setBackups();
 
         // Load history
         let i = 0;
@@ -115,10 +116,8 @@
         $("#sidemenu-toggle").addEventListener("click", function(){
             let wrapper = this.parentNode;
             if(wrapper.classList.contains("side-hidden")){
-                // Show
                 wrapper.classList.remove("side-hidden");
             } else {
-                // Hide
                 wrapper.classList.add("side-hidden");
             }
         });
@@ -153,17 +152,6 @@
         window.addEventListener("beforeunload", function(){
             localStorage["scale"] = mapScale;
         });
-    }
-
-    function wheelZoom(e){
-        if(e.ctrlKey){
-            e.preventDefault();
-            if(e.deltaY < 0){
-                $(".plus").click();
-            } else {
-                $(".minus").click();
-            }
-        }
     }
 
     // Only on page load
@@ -335,5 +323,48 @@
         let html = `<li id="${id}">${count}</li>`;
 
         return html;
+    }
+
+    function wheelZoom(e){
+        if(e.ctrlKey){
+            e.preventDefault();
+            if(e.deltaY < 0){
+                $(".plus").click();
+            } else {
+                $(".minus").click();
+            }
+        }
+    }
+
+    function setBackups(){
+        $("#download-backup").addEventListener("click", function(){
+            let link = $("#backup");
+
+            link.href = "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(deaths));
+            link.click();
+        });
+
+        $("#upload-backup").addEventListener("click", function(){
+            $("#backup-input").click();
+        });
+
+        $("#backup-input").addEventListener("change", function(e){
+            let file = e.target.files[0];
+
+            if(file){
+                let reader = new FileReader();
+
+                reader.onload = (ev) => {
+                    try{
+                        let text = ev.target.result;
+
+                        localStorage["data"] = text;
+                        location.reload();
+                    } catch(err){console.log(err)}
+                };
+
+                reader.readAsText(file);
+            }
+        });
     }
 })();
