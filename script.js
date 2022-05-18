@@ -13,6 +13,7 @@
         "https://images.uesp.net/e/ef/SR-map-Skyrim.jpg": "translate(-0.85%, 0.65%) scale(1.05, 1.135)"
     }
 
+    var dragging = false;
     var mapScale = parseFloat(localStorage["scale"] || 1);
     // Object of arrays of times when was death counted, arrays are named as coords: "x142y444"
     var deaths = JSON.parse(localStorage["data"] || "{}");
@@ -144,7 +145,11 @@
                 let x = e.layerX || e.offsetX;
                 let y = e.layerY || e.offsetY;
 
-                createCounter(x, y, mapScale);
+                if(dragging){
+                    dragging = false;
+                } else {
+                    createCounter(x, y, mapScale);
+                }
         });
 
         window.addEventListener("wheel", wheelZoom, {passive: false});
@@ -152,6 +157,8 @@
         window.addEventListener("beforeunload", function(){
             localStorage["scale"] = mapScale;
         });
+
+        mouseGrab(document.querySelector("html"), 2.5);
     }
 
     // Only on page load
@@ -237,6 +244,52 @@
                         <span class="arrow arrow-bottom"><svg viewBox="0 0 24 24"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg></span>
                     </div>`;
         return html;
+    }
+
+    function mouseGrab(grabElement, dragMultiplier = 2){
+        let pos = {
+            clickX: 0,
+            clickY: 0,
+            clickScrollX: 0,
+            clickScrollY: 0,
+            coordsLeft: 0,
+            coordsTop: 0
+        };
+
+        grabElement.addEventListener("mousedown", function(e){
+            window.addEventListener("mousemove", mouseMoveGrab);
+            document.body.classList.add("grabbed");
+            
+            let coords = grabElement.getBoundingClientRect();
+
+            pos.clickX = e.clientX - coords.left;
+            pos.clickY = e.clientY - coords.top;
+            pos.clickScrollX = grabElement.scrollLeft;
+            pos.clickScrollY = grabElement.scrollTop;
+            pos.coordsLeft = coords.left;
+            pos.coordsTop = coords.top;
+            
+            window.addEventListener("mouseup", function(){
+                window.removeEventListener("mousemove", mouseMoveGrab);
+                document.body.classList.remove("grabbed");
+                
+                if(Math.abs(grabElement.scrollLeft - pos.clickScrollX) > 5 || Math.abs(grabElement.scrollTop - pos.clickScrollY) > 5){
+                    dragging = true;
+                }
+            }, {once: true});
+        });
+        
+        function mouseMoveGrab(e){
+            let newX = - pos.clickX + e.clientX - pos.coordsLeft;
+            let newY = - pos.clickY + e.clientY - pos.coordsTop;
+
+            grabElement.scrollTo(pos.clickScrollX - newX * dragMultiplier, pos.clickScrollY - newY * dragMultiplier);
+        }
+        
+        if(!document.querySelector("#grab-style")){
+            let grabStyle = "<style id=grab-style>body.grabbed *{cursor:grab !important}</style>";
+            document.body.insertAdjacentHTML("afterend", grabStyle);
+        }
     }
 
     function setZoom(){

@@ -80,6 +80,8 @@ nav{
     transition: transform 0.2s;
     /* cursor: url(img/bones.png) 13 13, pointer; */
     cursor: url(img/skull-cursor.png) 12 12, pointer;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 #map-wrapper{
     width: min-content;
