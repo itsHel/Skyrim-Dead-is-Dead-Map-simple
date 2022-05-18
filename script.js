@@ -28,13 +28,13 @@
         mapWrapper.style.opacity = 1;
         mapWrapper.style.transform = "none";
         loading.style.display = "none";
-    } else {
-        map.addEventListener("load", function(){
-            mapWrapper.style.opacity = 1;
-            mapWrapper.style.transform = "none";
-            loading.style.display = "none";
-        });
     }
+
+    map.addEventListener("load", function(){
+        mapWrapper.style.opacity = 1;
+        mapWrapper.style.transform = "none";
+        loading.style.display = "none";
+    });
 
     function init(){
         document.documentElement.style.setProperty("--counter-size", counterSize + "px");
@@ -55,7 +55,10 @@
             map.src = imgDir + this.value;
             map.style.transform = scalling[this.value];
 
-            loading.style.display = "block";
+            if(!map.complete){
+                loading.style.display = "block";
+            }
+
             window.localStorage["mapType"] = this.value;
         });
 
@@ -76,6 +79,7 @@
         }
 
         $("#count-val").textContent = i;
+
         if(i){
             $("#sidemenu-list").insertAdjacentHTML("beforeend", listHtml);
             $("#sidemenu-wrapper").style.display = "flex";
@@ -103,6 +107,7 @@
             mapScale = newScale;
             setZoom();
         });
+
         $(".minus").addEventListener("click", function(){
             let newScale = mapScale;
 
@@ -348,6 +353,7 @@
         }
 
         let total = $("#count-val").textContent;
+
         if(total == 0){
             $("#sidemenu-wrapper").style.display = "none";
         } else if(total == 1){
@@ -374,7 +380,6 @@
 
     function getListItemHtml(id, count = 1){
         let html = `<li id="${id}">${count}</li>`;
-
         return html;
     }
 
