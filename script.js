@@ -63,11 +63,12 @@
         });
 
         customSelect(typeSelect, {theme: "dark"});
-        setBackups();
+        setupBackups();
 
         // Load history
-        let i = 0;
+        let index = 0;
         let listHtml = "";
+        
         for(const prop in deaths){
             let x = prop.match(/x(\d+)y/)[1];
             let y = prop.match(/y(\d+)s/)[1];
@@ -75,12 +76,12 @@
 
             insertCounter(x, y, scale, deaths[prop].length);
             listHtml += getListItemHtml("x" + x + "y" + y + "s" + scale, deaths[prop].length);
-            i += deaths[prop].length;
+            index += deaths[prop].length;
         }
 
-        $("#count-val").textContent = i;
+        $("#count-val").textContent = index;
 
-        if(i){
+        if(index){
             $("#sidemenu-list").insertAdjacentHTML("beforeend", listHtml);
             $("#sidemenu-wrapper").style.display = "flex";
         }
@@ -121,6 +122,7 @@
 
         $("#sidemenu-toggle").addEventListener("click", function(){
             let wrapper = this.parentNode;
+
             if(wrapper.classList.contains("side-hidden")){
                 wrapper.classList.remove("side-hidden");
             } else {
@@ -146,15 +148,15 @@
             if(e.target.nodeName != "IMG")
                 return;
 
-                // layerX works in Chrome and Opera despite MDN saying it doesnt
-                let x = e.layerX || e.offsetX;
-                let y = e.layerY || e.offsetY;
+            // layerX works in Chrome and Opera despite MDN saying it doesnt
+            let x = e.layerX || e.offsetX;
+            let y = e.layerY || e.offsetY;
 
-                if(dragging){
-                    dragging = false;
-                } else {
-                    createCounter(x, y, mapScale);
-                }
+            if(dragging){
+                dragging = false;
+            } else {
+                createCounter(x, y, mapScale);
+            }
         });
 
         window.addEventListener("wheel", wheelZoom, {passive: false});
@@ -386,6 +388,7 @@
     function wheelZoom(e){
         if(e.ctrlKey){
             e.preventDefault();
+
             if(e.deltaY < 0){
                 $(".plus").click();
             } else {
@@ -394,7 +397,7 @@
         }
     }
 
-    function setBackups(){
+    function setupBackups(){
         $("#download-backup").addEventListener("click", function(){
             let link = $("#backup");
 
