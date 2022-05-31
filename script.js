@@ -264,6 +264,9 @@
         };
 
         grabElement.addEventListener("mousedown", function(e){
+            if(e.target.id != "map" || e.button != 0)               // button 0 = mouse left button
+                return;
+            
             window.addEventListener("mousemove", mouseMoveGrab);
             document.body.classList.add("grabbed");
             
