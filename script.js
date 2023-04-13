@@ -165,7 +165,7 @@
             localStorage["scale"] = mapScale;
         });
 
-        mouseGrab(document.querySelector("html"), 2.5);
+        mouseGrab(document.querySelector("html"));
     }
 
     // Only on page load
@@ -253,7 +253,9 @@
         return html;
     }
 
-    function mouseGrab(grabElement, dragMultiplier = 2){
+    function mouseGrab(grabElement){
+        const dragMultiplier = 1.5;
+        
         let pos = {
             clickX: 0,
             clickY: 0,
@@ -267,8 +269,11 @@
             if(e.target.id != "map" || e.button != 0)               // button 0 = mouse left button
                 return;
             
+            dragging = false;
             window.addEventListener("mousemove", mouseMoveGrab);
-            document.body.classList.add("grabbed");
+            let grabbedTimeout = setTimeout(() => {
+                document.body.classList.add("grabbed");
+            }, 100);
             
             let coords = grabElement.getBoundingClientRect();
 
@@ -279,11 +284,14 @@
             pos.coordsLeft = coords.left;
             pos.coordsTop = coords.top;
             
-            window.addEventListener("mouseup", function(){
+            window.addEventListener("mouseup", function(event){
+                const minGrabDifference = 5;
+                
                 window.removeEventListener("mousemove", mouseMoveGrab);
+                clearTimeout(grabbedTimeout);
                 document.body.classList.remove("grabbed");
                 
-                if(Math.abs(grabElement.scrollLeft - pos.clickScrollX) > 5 || Math.abs(grabElement.scrollTop - pos.clickScrollY) > 5){
+                if(Math.abs(e.clientX - event.clientX) >= minGrabDifference || Math.abs(e.clientY - event.clientY) >= minGrabDifference){
                     dragging = true;
                 }
             }, {once: true});
