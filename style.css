@@ -296,10 +296,11 @@ nav{
 }
 #info{
     position: relative;
-    padding: 5px 10px;
+    padding: 5px 20px;
     font-weight: bold;
-    cursor:default;
+    cursor: default;
     font-size: 20px;
+    margin-right: -10px;
 }
 .tooltip{
     font-size: 18px;
