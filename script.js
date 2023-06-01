@@ -6,11 +6,11 @@
     const mapWrapper = $("#map-wrapper");
     const baseImg = $("#type-select option").value;
     const loading = $("#loading");
-    const imgDir = "";
+    const imgDir = "img/";
     const counterSize = 32;
     const scalling = {
-        "https://www.gamebanshee.com/skyrim/mapofskyrim/skyrimmap.png": "none",
-        "https://images.uesp.net/e/ef/SR-map-Skyrim.jpg": "translate(-0.85%, 0.65%) scale(1.05, 1.135)"
+        "map-marked.png": "none",
+        "map-original.jpg": "translate(-0.85%, 0.65%) scale(1.05, 1.135)"
     }
 
     var dragging = false;
